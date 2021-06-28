@@ -1,0 +1,31 @@
+# Initial Approach - time complexity O(26n)
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        
+        Char_list = 'QWERTYUIOPASDFGHJKLZXCVBNM'
+        res = 0
+        
+        for Char in Char_list:
+            l = 0
+            for r in range(len(s)):
+                while r-l+1-k > s[l:r+1].count(Char):
+                    l+=1
+                res = max(res, r-l+1)               
+                
+        return res
+        
+        
+# Advance Approach - 1 
+class Solution:
+   def characterReplacement(self, s: str, k: int) -> int:
+       Char_list = {}
+       res = 0        
+       l = 0
+       for r in range(len(s)):
+           Char_list[s[r]] = 1 + Char_list.get(s[r],0)
+           while (r-l+1) - max(Char_list.values()) > k:
+               Char_list[s[l]] -= 1
+               l+=1
+           res = max(res, r-l+1)               
+                
+       return res
